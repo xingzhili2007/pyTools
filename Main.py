@@ -55,9 +55,16 @@ for x in range(1):
     '''
     '''
     robot.txtwebhook(
-        "1，作者简介；2.画个鹦鹉螺号（高科技，布局，外形，结构）；3.优美语段摘抄；4:.对本书的总评价。",
-        robot.addticket(GstudentGroup(), GstudentGroupSec()),
+        "大家好呀",
+        robot.addticket(Gstd(), GstdSEC()),
         '', '', '', 0,
-        '注意'
+        ''
     )
     '''
+    robot.linkwebhook(
+        '如何在钉钉群里整翻你的老师',
+        '点击伽入-详情请见群公告，还有更多老司机福利等你有',
+        robot.addticket(Gstd(), GstdSEC()),
+        '', 'https://qr.dingtalk.com/action/joingroup?code=v1,k1,cMhTGY8ePNa3e489HXTpCeJrzODWq4gUg3ezLR0hAnc=&_dt_no_comment=1&origin=11',
+        ''
+    )

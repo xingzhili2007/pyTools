@@ -17,3 +17,7 @@ def GtstWebhookSEC():
 
 def GAllstudentSEC():
     return 'SEC836ce2bd8032e17d918cfb54a57345dc68ddc741be88e5d370f1e6568b1f9086'
+
+
+def GstdSEC():
+    return "SECdba97801dd3e0bf0cb94ea9de90b230eba87968d376388b344d74f85f817566f"

@@ -25,3 +25,7 @@ def GtstWebhook():
 
 def GAllStudent():
     return "https://oapi.dingtalk.com/robot/send?access_token=bfde62537453645a25574567f1c51a8b6db520c146ac66327100c7656771e94e"
+
+
+def Gstd():
+    return 'https://oapi.dingtalk.com/robot/send?access_token=13662a3abe70c1478554c70f696ba7548e4f048bfdcded528bc21cfe96dd6cac'
