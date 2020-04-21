@@ -18,10 +18,9 @@ class postmsg():
             "Content-Type": "application/json",
             "Charset": "UTF-8"
         }
-        self.translist = ["ok"]
-        self.lst = {'ok': '成功'}
 
     def txtwebhook(self, a, webhook, at1, at2, at3, atall, keyword):  # 发送函数
+        self.setV()
         if keyword != "":
             tex = "["+keyword+"]:"+a
         else:
@@ -51,6 +50,7 @@ class postmsg():
         self.returnError()
 
     def linkwebhook(self, title, text, webhook, PicUrl, MsgUrl, keyword):  # 发送函数
+        self.setV()
         if keyword != "":
             tex = "["+keyword+"]:"+text
         else:
@@ -75,7 +75,8 @@ class postmsg():
 
         self.returnError()
 
-    def addticket(self, wh, secret):  # 加签验证函数
+    def addticket(self, wh, secret):  # 加签验证函数\
+        self.setV()
         print("加签中")
         timestamp = int(time.time() * 1000)
         secret_enc = bytes(secret.encode('utf-8'))
@@ -90,6 +91,7 @@ class postmsg():
         return wh+"&timestamp="+str(timestamp)+"&sign="+sign
 
     def delay(self, isevery, t):  # 延时发送
+        self.setV()
         b = t
         c = t
         if isevery:
@@ -105,11 +107,19 @@ class postmsg():
                 time.sleep(1)
 
     def returnError(self):  # 错误信息解析
+        self.setV()
         error = json.loads(self.info.text)
         error = error['errmsg']
-        print(self.trans(error, '', '', '', ''))
+        tslt = Tools()
+        print(tslt.trans(error, '', '', '', ''))
+
+
+class Tools():
+    def setV(self):
+        self.lst = {'ok': '成功'}
 
     def suo(self, longw, key, expDate):
+        self.setV()
         if expDate == "":
             expDate = "9999-12-31"
         if key == "":
@@ -120,6 +130,8 @@ class postmsg():
         return info.text
 
     def trans(self, q, appid, secretKey, fromLang, toLang):
+
+        self.setV()
         try:
             return self.lst[q]
         except:

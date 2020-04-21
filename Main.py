@@ -6,9 +6,7 @@ from MemberSec import *  # 密钥文件
 # 定义类()
 # ???=postmsg()
 robot = postmsg()
-
-# 函数初始化
-robot.setV()
+tool = Tools()
 
 # 循环发送(次数)
 for x in range(1):
@@ -56,10 +54,11 @@ for x in range(1):
     '''
     robot.txtwebhook(
         "大家好呀",
-        robot.addticket(Gstd(), GstdSEC()),
+        robot.addticket(GtstWebhook(), GtstWebhookSEC()),
         '', '', '', 0,
         ''
     )
+    '''
     '''
     robot.linkwebhook(
         '如何在钉钉群里整翻你的老师',
@@ -68,3 +67,4 @@ for x in range(1):
         '', 'https://qr.dingtalk.com/action/joingroup?code=v1,k1,cMhTGY8ePNa3e489HXTpCeJrzODWq4gUg3ezLR0hAnc=&_dt_no_comment=1&origin=11',
         ''
     )
+    '''
