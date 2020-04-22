@@ -2,11 +2,13 @@
 from MyTools import *
 from MemberList import *  # Webhook地址文件
 from MemberSec import *  # 密钥文件
+from Combine import *
 
 # 定义类()
 # ???=postmsg()
 robot = postmsg()
 tool = Tools()
+gets = Get_URLinfo()
 
 # 循环发送(次数)
 for x in range(1):
@@ -68,4 +70,14 @@ for x in range(1):
         ''
     )
     '''
-    print(tool.suo("https://space.dingtalk.com/s/gwHOAbltPQLOLzZQfAPaACBiMDAxZWMwYmYyNGQ0NWY3YThkOTgwOWE5NWRjZDdhYg", '', ''))
+    '''
+    tool.download(
+        '/Users/lixingzhi/Downloads/', 'https://cdn.qupeiyin.cn/2018-07-12/1531360578548.mp4')
+    '''
+    '''
+    gets.English_qupeiyin(
+        'https://moive.qupeiyin.com/index.php?m=home&c=share&a=original_video&course=MDAwMDAwMDAwMLCdtmKBe7Ld&uid=MDAwMDAwMDAwMLGHrmaBoa6UsbeAcg')
+    '''
+
+    Combine_English_qupeiyin(
+        'https://moive.qupeiyin.com/index.php?m=home&c=share&a=original_video&course=MDAwMDAwMDAwMLCdtmKBe7Ld&uid=MDAwMDAwMDAwMLGHrmaBoa6UsbeAcg', '')

@@ -133,3 +133,5 @@ dmypy.json
 
 .code-workspace
 *.pyc
+Download-Datas/
+

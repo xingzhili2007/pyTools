@@ -9,6 +9,9 @@ from urllib import parse
 import http.client
 import urllib
 import random
+import urllib.request
+import os
+from bs4 import BeautifulSoup
 
 
 class postmsg():
@@ -168,3 +171,34 @@ class Tools():
             finally:
                 if httpClient:
                     httpClient.close()
+
+
+class Get_URLinfo():
+    def English_qupeiyin(self, URL):
+        # link格式："https://moive.qupeiyin.com/home/show/share/sharefrom/oneself/id/XXXXXXXXX"
+
+        # 模仿浏览器
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
+        }
+        # 获取HTML源码
+        r = requests.get(URL, headers=headers)
+        # 使用BeautifulSoup（毒鸡汤）解析
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        # 找到视频地址
+        result = soup.find('video')
+
+        # 打印
+        print('FindVideoURL:Successfully \nResult=', result.attrs['src'])
+
+        # 返回结果
+        return result.attrs['src']
+
+    def download(self, store_path, url):
+        filename = url.split("/")[-1]
+        filepath = os.path.join(store_path, filename)
+
+        file_data = requests.get(url, allow_redirects=True).content
+        with open(filepath, 'wb') as handler:
+            handler.write(file_data)
