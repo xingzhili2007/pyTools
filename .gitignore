@@ -133,5 +133,6 @@ dmypy.json
 
 .code-workspace
 *.pyc
-Cache/
+Cache/*.mp4
+myMain.py
 
