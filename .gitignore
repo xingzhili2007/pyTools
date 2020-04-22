@@ -136,3 +136,8 @@ dmypy.json
 Cache/*.mp4
 myMain.py
 
+
+.DS_Store
+test/
+myMemberList.py
+myMemberSec.py

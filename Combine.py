@@ -1,6 +1,6 @@
 from MyTools import *
-from MemberList import *  # Webhook地址文件
-from MemberSec import *  # 密钥文件
+from myMemberList import *  # Webhook地址文件
+from myMemberSec import *  # 密钥文件
 
 # 定义类()
 robot = postmsg()
