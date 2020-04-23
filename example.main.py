@@ -6,6 +6,6 @@ from Combine import *
 
 # 定义类()
 # ???=postmsg()
-robot = postmsg()
+robot = Dingtalk()
 tool = Tools()
 gets = Get_URLinfo()

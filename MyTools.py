@@ -12,9 +12,10 @@ import random
 import urllib.request
 import os
 from bs4 import BeautifulSoup
+import platform
 
 
-class postmsg():
+class Dingtalk():
     def setV(self):  # 初始化参数
         self.delaycc = True
         self.header = {
@@ -171,6 +172,15 @@ class Tools():
             finally:
                 if httpClient:
                     httpClient.close()
+
+    def nowOS(self):
+        nowos = platform.system()
+        if nowos == "Darwin":
+            return 'mac'
+        elif nowos == "Windows":
+            return "win"
+        else:
+            return 'linux'
 
 
 class Get_URLinfo():
