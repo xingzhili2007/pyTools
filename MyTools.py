@@ -182,6 +182,15 @@ class Tools():
         else:
             return 'linux'
 
+    def baiduttsURL(self, text, lan, spd, toplay):
+        URL = 'https://fanyi.baidu.com/gettts?lan=' + \
+            lan + '&text=' + parse.quote(text) + \
+            '&spd=' + str(spd) + '&source=web'
+        print(URL)
+        if toplay == True:
+            os.system("iina '"+URL+"'")
+        return URL
+
 
 class Get_URLinfo():
     def English_qupeiyin(self, URL):
@@ -205,8 +214,9 @@ class Get_URLinfo():
         # 返回结果
         return result.attrs['src']
 
-    def download(self, store_path, url):
-        filename = url.split("/")[-1]
+    def download(self, store_path, url, filename):
+        if filename == '':
+            filename = url.split("/")[-1]
         filepath = os.path.join(store_path, filename)
 
         file_data = requests.get(url, allow_redirects=True).content
