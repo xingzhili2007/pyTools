@@ -42,7 +42,7 @@ def Combine_baiduttsURL(text, lan, spd, toplay, store_path, filename):
         os.makedirs(store_path)
     # download
     if filename == '':
-        filename = text+'.mp3'
+        filename = text+'&speed='+str(spd)+'.mp3'
     filepath = os.path.join(store_path, filename)
     file_data = requests.get(URL, allow_redirects=True).content
     with open(filepath, 'wb') as handler:
