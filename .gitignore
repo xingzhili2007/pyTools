@@ -145,3 +145,5 @@ myMemberSec.py
 *.mp4
 .DS_Store
 *.mp3
+*.png
+.DS_Store

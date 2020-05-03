@@ -191,6 +191,17 @@ class Tools():
             os.system("iina '"+URL+"'")
         return URL
 
+    def txt2wm(self, text):
+        URL = 'https://cli.im/api/qrcode/code?text=' + str(text)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
+        }
+        r = requests.get(URL, headers=headers)
+        soup = BeautifulSoup(r.text, "html.parser")
+        result = soup.find(class_='qrcode_plugins_img')
+        print('https:' + result.attrs['src'])
+        return 'https:'+result.attrs['src']
+
 
 class Get_URLinfo():
     def English_qupeiyin(self, URL):
