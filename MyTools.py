@@ -13,20 +13,18 @@ import urllib.request
 import os
 from bs4 import BeautifulSoup
 import platform
+import string
 
 
 class Dingtalk():
     def setV(self):  # 初始化参数
         self.delaycc = True
-        self.header = {
-            "Content-Type": "application/json",
-            "Charset": "UTF-8"
-        }
+        self.header = {"Content-Type": "application/json", "Charset": "UTF-8"}
 
     def txtwebhook(self, a, webhook, at1, at2, at3, atall, keyword):  # 发送函数
         self.setV()
         if keyword != "":
-            tex = "["+keyword+"]:"+a
+            tex = "[" + keyword + "]:" + a
         else:
             tex = a
         message = {
@@ -40,23 +38,24 @@ class Dingtalk():
                 ],
                 "isAtAll": atall  # 此处为是否@所有人
             }
-
         }
         # 对请求的数据进行json封装
         message_json = json.dumps(message)
         # 发送请求
-        self.info = requests.post(
-            url=webhook, data=message_json, headers=self.header)
+        self.info = requests.post(url=webhook,
+                                  data=message_json,
+                                  headers=self.header)
         # 打印返回的结果
         info = self.info
         print("错误信息:", info.text)
         self.Error = info.text
         self.returnError()
 
-    def linkwebhook(self, title, text, webhook, PicUrl, MsgUrl, keyword):  # 发送函数
+    def linkwebhook(self, title, text, webhook, PicUrl, MsgUrl,
+                    keyword):  # 发送函数
         self.setV()
         if keyword != "":
-            tex = "["+keyword+"]:"+text
+            tex = "[" + keyword + "]:" + text
         else:
             tex = text
         message = {
@@ -71,8 +70,9 @@ class Dingtalk():
         # 对请求的数据进行json封装
         message_json = json.dumps(message)
         # 发送请求
-        self.info = requests.post(
-            url=webhook, data=message_json, headers=self.header)
+        self.info = requests.post(url=webhook,
+                                  data=message_json,
+                                  headers=self.header)
         # 打印返回的结果
         info = self.info
         print("错误信息:", info.text)
@@ -86,13 +86,14 @@ class Dingtalk():
         secret_enc = bytes(secret.encode('utf-8'))
         string_to_sign = '{}\n{}'.format(timestamp, secret)
         string_to_sign_enc = bytes(string_to_sign.encode('utf-8'))
-        hmac_code = hmac.new(secret_enc, string_to_sign_enc,
+        hmac_code = hmac.new(secret_enc,
+                             string_to_sign_enc,
                              digestmod=hashlib.sha256).digest()
         sign = parse.quote(base64.b64encode(hmac_code), safe='')
         print("时间戳=", timestamp)
         print("签名=", sign)
         # https://oapi.dingtalk.com/robot/send?access_token=XXXXXX&timestamp=XXX&sign=XXX
-        return wh+"&timestamp="+str(timestamp)+"&sign="+sign
+        return wh + "&timestamp=" + str(timestamp) + "&sign=" + sign
 
     def delay(self, isevery, t):  # 延时发送
         self.setV()
@@ -153,8 +154,9 @@ class Tools():
 
             sign = appid + q + str(salt) + secretKey
             sign = hashlib.md5(sign.encode()).hexdigest()
-            myurl = myurl + '?appid=' + appid + '&q=' + urllib.parse.quote(q) + '&from=' + fromLang + '&to=' + toLang + '&salt=' + str(
-                salt) + '&sign=' + sign
+            myurl = myurl + '?appid=' + appid + '&q=' + urllib.parse.quote(
+                q) + '&from=' + fromLang + '&to=' + toLang + '&salt=' + str(
+                    salt) + '&sign=' + sign
 
             try:
                 httpClient = http.client.HTTPConnection('api.fanyi.baidu.com')
@@ -166,7 +168,7 @@ class Tools():
                 result = json.loads(result_all)
 
                 # print(result)
-                return(result['trans_result'][0]['dst'])
+                return (result['trans_result'][0]['dst'])
             except Exception as e:
                 print(e)
             finally:
@@ -188,19 +190,20 @@ class Tools():
             '&spd=' + str(spd) + '&source=web'
         print(URL)
         if toplay == True:
-            os.system("iina '"+URL+"'")
+            os.system("iina '" + URL + "'")
         return URL
 
     def txt2wm(self, text):
         URL = 'https://cli.im/api/qrcode/code?text=' + str(text)
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
+            'User-Agent':
+            'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
         }
         r = requests.get(URL, headers=headers)
         soup = BeautifulSoup(r.text, "html.parser")
         result = soup.find(class_='qrcode_plugins_img')
         print('https:' + result.attrs['src'])
-        return 'https:'+result.attrs['src']
+        return 'https:' + result.attrs['src']
 
 
 class Get_URLinfo():
@@ -209,7 +212,8 @@ class Get_URLinfo():
 
         # 模仿浏览器
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
+            'User-Agent':
+            'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'
         }
         # 获取HTML源码
         r = requests.get(URL, headers=headers)
@@ -233,3 +237,45 @@ class Get_URLinfo():
         file_data = requests.get(url, allow_redirects=True).content
         with open(filepath, 'wb') as handler:
             handler.write(file_data)
+
+
+class AI():
+    def txAIchat(self, TEXT, APPID, APPKEY):
+        # 获得时间戳(秒级)，防止请求重放
+        time_stamp = int(time.time())
+        # 获得随机字符串，保证签名不被预测
+        nonce_str = ''.join(
+            random.sample(string.ascii_letters + string.digits, 10))
+        # 组合参数（缺少sign，其值要根据以下获得）
+        params = {
+            'app_id': APPID,
+            'session': 10000,
+            'question': TEXT,
+            'time_stamp': time_stamp,
+            'nonce_str': nonce_str
+        }
+        # 获得sign对应的值
+        before_sign = ''
+        # 对key排序拼接
+        for key in sorted(params):
+            before_sign += f'{key}={parse.quote(str(params[key]).encode("utf8"))}&'
+        # 将应用秘钥以app_key为键名，拼接到before_sign的末尾
+        before_sign += f"app_key={APPKEY}"
+        # 对获得的before_sign进行MD5加密（结果大写），得到借口请求签名
+        sign = hashlib.md5(before_sign.encode("utf-8")).hexdigest().upper()
+        # 将请求签名添加进参数字典
+        params["sign"] = sign
+        '''
+        API = 'https://api.ai.qq.com/fcgi-bin/nlp/nlp_textchat?app_id=' + str(
+            params['app_id']) + '&session=' + str(
+                params['session']) + '&question=' + parse.quote(
+                    params['question']) + '&time_stamp=' + str(
+                        params['time_stamp']) + '&nonce_str=' + params[
+                            'nonce_str'] + '&sign=' + params['sign']
+        info = requests.get(url=API)
+        '''
+        info = requests.get(
+            url='https://api.ai.qq.com/fcgi-bin/nlp/nlp_textchat',
+            params=params)
+        answers = json.loads(info.text)
+        print(answers['data']['answer'])

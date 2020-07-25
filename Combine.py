@@ -2,11 +2,13 @@ from MyTools import *
 from MemberList import *  # Webhook地址文件
 from MemberSec import *  # 密钥文件
 from envValue.Dingtalk.Member import *
+from envValue.TencentAI.APP import *
 
 # 定义类()
 robot = Dingtalk()
 tool = Tools()
 gets = Get_URLinfo()
+ai = AI()
 
 
 def Combine_English_qupeiyin(URL, store_path):
@@ -92,3 +94,10 @@ def txtwebhookAuto(text, GroupName):
         KeyWord = ''  #如果未应用则为空
     text = str(text)  #格式化要发送的文字
     robot.txtwebhook(text, webhook, '', '', '', '', KeyWord)  #发送
+
+
+def AutoChat(text, app):
+
+    appid = Library[app]['APPID']
+    appkey = Library[app]['APPKEY']
+    ai.txAIchat(text, appid, appkey)
