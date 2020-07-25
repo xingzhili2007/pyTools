@@ -12,7 +12,7 @@ Library:
         "KeyWord": []#类别名称:KeyWord-类别内容_格式:列表[int(关键词的个数),str(关键词1),str(关键词2)......]
     }
 '''
-Library = {
+DingtalkLibrary = {
     #群聊标识符
     '一年级12班(130班)': {
         #Webhook地址:

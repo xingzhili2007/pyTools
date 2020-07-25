@@ -79,17 +79,17 @@ def Combine_2wm(text, store_path, filename):
 def txtwebhookAuto(text, GroupName):
     #检测目录中是否存在该机器人(群聊)
     try:
-        webhook = Library[GroupName]['Webhook']  #如果有该机器人信息就赋值
+        webhook = DingtalkLibrary[GroupName]['Webhook']  #如果有该机器人信息就赋值
     except:
         print('群名不存在')  #如果没有则报错
         return False
     #检测该机器人是否应用了加签验证
-    if Library[GroupName]['Sec'][0] == True:
-        webhook = robot.addticket(Library[GroupName]['Webhook'],
-                                  Library['机器人测试']['Sec'][1])  #如果应用则加签
+    if DingtalkLibrary[GroupName]['Sec'][0] == True:
+        webhook = robot.addticket(DingtalkLibrary[GroupName]['Webhook'],
+                                  DingtalkLibrary['机器人测试']['Sec'][1])  #如果应用则加签
     #检测该机器人是否应用了关键字验证
-    if Library[GroupName]['KeyWord'][0] != 0:
-        KeyWord = Library[GroupName]['KeyWord'][1]  #如果应用则选择第一个关键字
+    if DingtalkLibrary[GroupName]['KeyWord'][0] != 0:
+        KeyWord = DingtalkLibrary[GroupName]['KeyWord'][1]  #如果应用则选择第一个关键字
     else:
         KeyWord = ''  #如果未应用则为空
     text = str(text)  #格式化要发送的文字
@@ -98,6 +98,6 @@ def txtwebhookAuto(text, GroupName):
 
 def AutoChat(text, app):
 
-    appid = Library[app]['APPID']
-    appkey = Library[app]['APPKEY']
+    appid = AILibrary[app]['APPID']
+    appkey = AILibrary[app]['APPKEY']
     ai.txAIchat(text, appid, appkey)
