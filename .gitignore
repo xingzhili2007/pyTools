@@ -135,14 +135,9 @@ dmypy.json
 .code-workspace
 *.pyc
 Cache/*.mp4
-myMain.py
+
 
 
 .DS_Store
-test/
 myMemberList.py
 myMemberSec.py
-*.mp4
-.DS_Store
-*.mp3
-*.png
