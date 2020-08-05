@@ -60,7 +60,7 @@ def Combine_2wm(text, store_path, filename):
         store_path = os.getcwd() + '/Cache'
         if not os.path.exists(store_path):
             os.makedirs(store_path)
-    nowtime = time.strftime('%Y-%m-%d_%H:%M:%S', time.localtime(time.time()))
+
     nowtime = str(nowtime)
     store_path = store_path + '/' + nowtime
     if not os.path.exists(store_path):
@@ -76,24 +76,34 @@ def Combine_2wm(text, store_path, filename):
     return store_path
 
 
-def txtwebhookAuto(text, GroupName):
-    #检测目录中是否存在该机器人(群聊)
+def txtwebhookAuto(text, GroupName, keyW=1):
+    # 检测目录中是否存在该机器人(群聊)
     try:
-        webhook = DingtalkLibrary[GroupName]['Webhook']  #如果有该机器人信息就赋值
+        webhook = DingtalkLibrary[GroupName]['Webhook']  # 如果有该机器人信息就赋值
     except:
-        print('群名不存在')  #如果没有则报错
+        print('群名不存在')  # 如果没有则报错
         return False
-    #检测该机器人是否应用了加签验证
+    # 检测该机器人是否应用了加签验证
     if DingtalkLibrary[GroupName]['Sec'][0] == True:
-        webhook = robot.addticket(DingtalkLibrary[GroupName]['Webhook'],
-                                  DingtalkLibrary['机器人测试']['Sec'][1])  #如果应用则加签
-    #检测该机器人是否应用了关键字验证
+        try:
+            webhook = robot.addticket(DingtalkLibrary[GroupName]['Webhook'],
+                                      DingtalkLibrary['机器人测试']['Sec'][1])  # 如果应用则加签
+        except:
+            print('密钥不存在')  # 如果没有则报错
+            return False
+    # 检测该机器人是否应用了关键字验证
     if DingtalkLibrary[GroupName]['KeyWord'][0] != 0:
-        KeyWord = DingtalkLibrary[GroupName]['KeyWord'][1]  #如果应用则选择第一个关键字
+        try:
+            # 如果应用则选择第一个关键字
+            KeyWord = DingtalkLibrary[GroupName]['KeyWord'][keyW]
+        except:
+            print('关键词不存在')  # 如果没有则报错
+            return False
     else:
-        KeyWord = ''  #如果未应用则为空
-    text = str(text)  #格式化要发送的文字
-    robot.txtwebhook(text, webhook, '', '', '', '', KeyWord)  #发送
+        KeyWord = ''  # 如果未应用则为空
+    text = str(text)  # 格式化要发送的文字
+    robot.txtwebhook(text, webhook, '', '', '', '', KeyWord)  # 发送
+    return True
 
 
 def AutoChat(text, app):

@@ -49,7 +49,7 @@ class Dingtalk():
         info = self.info
         print("错误信息:", info.text)
         self.Error = info.text
-        self.returnError()
+        # self.returnError()
 
     def linkwebhook(self, title, text, webhook, PicUrl, MsgUrl,
                     keyword):  # 发送函数
@@ -77,7 +77,7 @@ class Dingtalk():
         info = self.info
         print("错误信息:", info.text)
 
-        self.returnError()
+        # self.returnError()
 
     def addticket(self, wh, secret):  # 加签验证函数\
         self.setV()
@@ -89,7 +89,7 @@ class Dingtalk():
         hmac_code = hmac.new(secret_enc,
                              string_to_sign_enc,
                              digestmod=hashlib.sha256).digest()
-        sign = parse.quote(base64.b64encode(hmac_code), safe='')
+        sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
         print("时间戳=", timestamp)
         print("签名=", sign)
         # https://oapi.dingtalk.com/robot/send?access_token=XXXXXX&timestamp=XXX&sign=XXX
@@ -115,8 +115,9 @@ class Dingtalk():
         self.setV()
         error = json.loads(self.info.text)
         error = error['errmsg']
-        tslt = Tools()
-        print(tslt.trans(error, '', '', '', ''))
+        print(error)
+        #tslt = Tools()
+        #print(tslt.trans(error, '', '', '', ''))
 
 
 class Tools():
