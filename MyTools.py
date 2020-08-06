@@ -116,8 +116,6 @@ class Dingtalk():
         error = json.loads(self.info.text)
         error = error['errmsg']
         print(error)
-        #tslt = Tools()
-        #print(tslt.trans(error, '', '', '', ''))
 
 
 class Tools():
