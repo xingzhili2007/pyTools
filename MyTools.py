@@ -14,7 +14,11 @@ import os
 from bs4 import BeautifulSoup
 import platform
 import string
-
+from wordpress_xmlrpc import Client, WordPressPost, WordPressTerm
+from wordpress_xmlrpc.methods.posts import GetPosts, NewPost
+from wordpress_xmlrpc.methods.users import GetUserInfo
+from wordpress_xmlrpc.methods import posts, taxonomies, media
+from wordpress_xmlrpc.compat import xmlrpc_client
 
 class Dingtalk():
     def setV(self):  # 初始化参数
@@ -183,7 +187,7 @@ class Tools():
         else:
             return 'linux'
 
-    def baiduttsURL(self, text, lan, spd, toplay):
+    def baiduttsURL(self, text, lan="zh", spd=5, toplay=False):
         URL = 'https://fanyi.baidu.com/gettts?lan=' + \
             lan + '&text=' + parse.quote(text) + \
             '&spd=' + str(spd) + '&source=web'
@@ -278,3 +282,22 @@ class AI():
             params=params)
         answers = json.loads(info.text)
         print(answers['data']['answer'])
+
+
+class WordPress():
+    def sendWordpress(self, Title, Content, username, password, URL="lxzblog.xjqxz.top", status="publish", category=['未分类'], tag=['None']):
+        wp = Client('http://'+URL+'/xmlrpc.php', username, password)
+        post = WordPressPost()
+        post.title = Title
+        print("题目：",post.title)
+        post.content = Content
+        print("内容：", post.content)
+        post.post_status = status  # 文章状态，不写默认是草稿，private表示私密的，draft表示草稿，publish表示发布
+        print("状态：", post.post_status)
+        post.terms_names = {
+            'post_tag': tag,  # 文章所属标签，没有则自动创建
+            'category': category  # 文章所属分类，没有则自动创建
+        }
+        print("标签", post.terms_names)
+        post.id = wp.call(posts.NewPost(post))
+        print("网页：", 'http://'+URL +'/?p='+str(post.id))
