@@ -14,11 +14,15 @@ import os
 from bs4 import BeautifulSoup
 import platform
 import string
+import difflib
 from wordpress_xmlrpc import Client, WordPressPost, WordPressTerm
 from wordpress_xmlrpc.methods.posts import GetPosts, NewPost
 from wordpress_xmlrpc.methods.users import GetUserInfo
 from wordpress_xmlrpc.methods import posts, taxonomies, media
 from wordpress_xmlrpc.compat import xmlrpc_client
+NowDir = os.path.abspath(os.path.dirname(
+    os.path.abspath(__file__)) + os.path.sep + ".")
+
 
 class Dingtalk():
     def setV(self):  # 初始化参数
@@ -126,15 +130,20 @@ class Tools():
     def setV(self):
         self.lst = {'ok': '成功'}
 
-    def suo(self, longw, key, expDate):
-        self.setV()
-        if expDate == "":
-            expDate = "9999-12-31"
-        if key == "":
-            key = '5e881fa3b1b63c47b6d82fa4@92114440312e773d175743ddbb2d96e2'
+    def suo_im(self, longw, key='5e881fa3b1b63c47b6d82fa4@92114440312e773d175743ddbb2d96e2', expDate="9999-12-31"):
         API = "http://suo.im/api.htm?url=" + \
             parse.quote(longw) + "&key=" + key + "&expireDate=" + expDate
         info = requests.get(API)
+        print(info.text)
+        return info.text
+
+    def suowo(self, url, key='5e881fa3b1b63c47b6d82fa4@92114440312e773d175743ddbb2d96e2', domain=4, expDate="9999-12-31"):
+        '''http://api.suowo.cn/api.htm?url=urlencode('http://weixin.qq.com')&key=5e881fa3b1b63c47b6d82fa4@92114440312e773d175743ddbb2d96e2&expireDate=2021-03-31&domain=0'''
+        API = "http://api.suowo.cn/api.htm?url=" + \
+            parse.quote(url)+'&key='+key+"&expireDate=" + \
+            expDate+"&domain="+str(domain)
+        info = requests.get(API)
+        print(info.text)
         return info.text
 
     def trans(self, q, appid, secretKey, fromLang, toLang):
@@ -289,7 +298,7 @@ class WordPress():
         wp = Client('http://'+URL+'/xmlrpc.php', username, password)
         post = WordPressPost()
         post.title = Title
-        print("题目：",post.title)
+        print("题目：", post.title)
         post.content = Content
         print("内容：", post.content)
         post.post_status = status  # 文章状态，不写默认是草稿，private表示私密的，draft表示草稿，publish表示发布
@@ -300,4 +309,69 @@ class WordPress():
         }
         print("标签", post.terms_names)
         post.id = wp.call(posts.NewPost(post))
-        print("网页：", 'http://'+URL +'/?p='+str(post.id))
+        print("网页：", 'http://'+URL + '/?p='+str(post.id))
+
+
+class dictionary():
+    def Equalrate(self, str1, str2):
+        return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
+
+    def findci(self, ciyu):
+        ci = json.load(open(NowDir+"/envValue/Dictionary/ci.json"))
+        lenci = len(ci)
+        for x in range(lenci):
+            now = ci[x]
+            if ci[x]['ci'] == ciyu:
+                print(ci[x]['explanation'])
+                return ci[x]['explanation']
+        print("查无此词")
+        return False
+
+    def findword(self, zi, getmore=False):
+        word = json.load(open(NowDir+"/envValue/Dictionary/word.json"))
+        lenword = len(word)
+        for x in range(lenword):
+
+            now = word[x]["word"]
+            nowolds = word[x]["oldword"]
+            if zi == now or zi == nowolds:
+                nowlist = word[x]
+                print("简体字："+now)
+                print("繁体字："+nowolds)
+                print("笔画："+nowlist["strokes"])
+                print("拼音；"+nowlist["pinyin"])
+                print("部首："+nowlist["radicals"])
+                print("释义："+nowlist["explanation"])
+                if getmore:
+                    print("拓展："+nowlist["more"])
+                return nowlist
+        print("查无此字")
+        return False
+
+    def findxhy(self, xhy):
+        xiehouyu = json.load(open(NowDir+"/envValue/Dictionary/xiehouyu.json"))
+        lenxhy = len(xiehouyu)
+        for x in range(lenxhy):
+            now = xiehouyu[x]["riddle"]
+            if(self.Equalrate(now, xhy) >= 0.85):
+                print("解析："+xiehouyu[x]["answer"])
+                return xiehouyu[x]["answer"]
+        print("查无此条")
+        return False
+
+    def findidiom(self, cy):
+        chengyu = json.load(open(NowDir+"/envValue/Dictionary/idiom.json"))
+        lenchengyu = len(chengyu)
+        for x in range(lenchengyu):
+            nowcy = chengyu[x]["word"]
+            if nowcy == cy:
+                nowlist = chengyu[x]
+                print("成语："+nowcy)
+                print("拼音："+nowlist["pinyin"])
+                print("缩写："+nowlist["abbreviation"])
+                print("释义："+nowlist["explanation"])
+                print("例句："+nowlist["example"])
+                print("出处："+nowlist["derivation"])
+                return nowlist
+        print("查无此词")
+        return False

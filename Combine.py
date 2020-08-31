@@ -9,6 +9,7 @@ robot = Dingtalk()
 tool = Tools()
 gets = Get_URLinfo()
 ai = AI()
+Dic = dictionary()
 
 
 def Combine_English_qupeiyin(URL, store_path):
@@ -111,3 +112,26 @@ def AutoChat(text, app):
     appid = AILibrary[app]['APPID']
     appkey = AILibrary[app]['APPKEY']
     ai.txAIchat(text, appid, appkey)
+
+
+def DicAutosort(find):
+
+    lenfind = len(find)
+    if lenfind < 1:
+        print("Input Error")
+    elif lenfind < 2:
+        getmore = input("是否获取拓展性内容(y/n) : ")
+        moreflag = False
+        if getmore == 'y' or getmore == 'Y':
+            moreflag = True
+        Dic.findword(find, moreflag)
+    elif lenfind < 3:
+        Dic.findci(find)
+    elif lenfind > 3:
+        stat = input("输入 成语:1 歇后语:2 : ")
+        if stat == '1':
+            Dic.findidiom(find)
+        else:
+            Dic.findxhy(find)
+    else:
+        print("暂不支持")
