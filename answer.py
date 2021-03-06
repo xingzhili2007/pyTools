@@ -14,9 +14,9 @@ ai = AI()
 Empty = ''
 
 # path=/Users/lixingzhi/Downloads/mathans
-for x in range(199):
-    wp = 165728 + x
+for x in range(141):
+    wp = 113379 + x
     p = x + 1
     url = "https://weixin.zijinshe.com/cms/upload/page/"+str(wp)+".jpg"
-    gets.download("/Users/lixingzhi/Downloads/mathans",
-                  url, "八上数学P"+str(p)+"页.jpg")
+    gets.download("/Users/lixingzhi/Documents/en",
+                  url, "八上英语P"+str(p)+"页.jpg")

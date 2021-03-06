@@ -14,7 +14,7 @@ Library:
 '''
 DingtalkLibrary = {
     # 群聊标识符
-    '一年级12班(130班)': {
+    '二年级12班(130班)': {
         # Webhook地址:
         "Webhook":  # 类别名称
         "https://oapi.dingtalk.com/robot/send?access_token=4831e8e3bdfdec5129e6d642b10838e58abec5e480500a872a3d88a97d973362"  # 类别内容
@@ -26,18 +26,14 @@ DingtalkLibrary = {
     },  # 分隔符
 
     # 群聊标识符
-    '一年级12班(130班)学生': {
+    '二年级12班(130班)学生': {
         # Webhook地址:
         "Webhook":  # 类别名称
         "https://oapi.dingtalk.com/robot/send?access_token=bfde62537453645a25574567f1c51a8b6db520c146ac66327100c7656771e94e"  # 类别内容
         ,  # 分隔符
-        "Sec": [
-            True,  # 类别名称:Sec
-            # 类别内容_格式:列表[bool(是否需要加签验证),str(密钥)]
-            'SEC836ce2bd8032e17d918cfb54a57345dc68ddc741be88e5d370f1e6568b1f9086'
-        ],
+        "Sec": [False, 'SEC836ce2bd8032e17d918cfb54a57345dc68ddc741be88e5d370f1e6568b1f9086'],
         # 类别名称:KeyWord-类别内容_格式:列表[int(关键词的个数),str(关键词1),str(关键词2)......]
-        "KeyWord": [False]
+        "KeyWord": [1, "消息"]
     },
 
     # 群聊标识符

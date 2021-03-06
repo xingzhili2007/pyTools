@@ -11,10 +11,8 @@ robot = Dingtalk()
 tool = Tools()
 gets = Get_URLinfo()
 ai = AI()
-Empty = ''
 WordPress = WordPress()
 Dic = dictionary()
 
-#tool.baiduttsURL('水皆缥碧，千丈见底。游鱼细石，直视无碍。急湍甚箭，猛浪若奔。', '', '', '')
-#AutoChat('你搞哦', 'test')
-DicAutosort("开心")
+
+txtwebhookAuto("李卓恒（140107********0113）请勿贩毒！！！\nDear Zhuoheng Li(140107********0113),please do not spread salacious & pornography or play a part in drug trafficking", "二年级12班(130班)")
