@@ -15,4 +15,4 @@ WordPress = WordPress()
 Dic = dictionary()
 
 
-txtwebhookAuto("李卓恒（140107********0113）请勿贩毒！！！\nDear Zhuoheng Li(140107********0113),please do not spread salacious & pornography or play a part in drug trafficking", "二年级12班(130班)")
+txtwebhookAuto("人民教(gong)师(di)", "二年级12班(130班)")

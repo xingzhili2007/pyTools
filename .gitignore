@@ -141,3 +141,4 @@ Cache/*.mp4
 .DS_Store
 myMemberList.py
 myMemberSec.py
+*.icloud
